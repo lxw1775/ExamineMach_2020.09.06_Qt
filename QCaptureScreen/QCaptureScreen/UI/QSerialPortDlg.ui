@@ -30,6 +30,23 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
+       <widget class="QPushButton" name="btnFind">
+        <property name="text">
+         <string>FindPort</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="cbxPortName"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnOpen">
+        <property name="text">
+         <string>OpenPort</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btnSend">
         <property name="text">
          <string>Send</string>
