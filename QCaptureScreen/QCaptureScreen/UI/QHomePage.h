@@ -1,15 +1,14 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
-#include "ui_QCaptureScreen.h"
+#include "ui_QHomePage.h"
 
-class QCaptureScreen : public QMainWindow
+class QHomePage : public QMainWindow
 {
 	Q_OBJECT
 
 public:
-	QCaptureScreen(QWidget *parent = Q_NULLPTR);
-
+	QHomePage(QWidget *parent = Q_NULLPTR);
 
 protected:
 	//当不显示标题栏时 允许移动窗口
@@ -17,8 +16,11 @@ protected:
 	virtual void mouseMoveEvent(QMouseEvent*);
 	virtual void mouseReleaseEvent(QMouseEvent*);
 
+private slots:
+	void OnBtnSerialPortTest();
+
 private:
-	Ui::QCaptureScreenClass ui;
+	Ui::QHomePage ui;
 
 	//当不显示标题栏时 允许移动窗 变量
 	bool		m_bDrag;

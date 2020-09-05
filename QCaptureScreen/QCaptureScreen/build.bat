@@ -1,0 +1,1 @@
+D:\Qt\Qt5.14.1\5.14.1\msvc2017_64\bin\windeployqt.exe 	QCaptureScreen.exe

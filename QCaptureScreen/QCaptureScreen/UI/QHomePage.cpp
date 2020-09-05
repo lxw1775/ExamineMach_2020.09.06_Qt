@@ -1,11 +1,12 @@
 #include "QHomePage.h"
 #include <QMouseEvent>
-
+#include <QPushButton>
+#include "QSerialPortDlg.h"
 //是否掩藏标题栏
 //#define TITLEBAR_HIDE
 
 
-QCaptureScreen::QCaptureScreen(QWidget *parent)
+QHomePage::QHomePage(QWidget *parent)
 	: QMainWindow(parent)
 	, m_bDrag(false)
 {
@@ -15,10 +16,14 @@ QCaptureScreen::QCaptureScreen(QWidget *parent)
 	//不显示标题栏
 	setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Dialog);
 #endif // TITLEBAR_HIDE
+
+	//SIGNAL中函数参数 和 SLOT 函数参数一模一样
+	connect(ui.btnSerialPortTest, SIGNAL(clicked()), this, SLOT(OnBtnSerialPortTest()));
+	QPushButton;
 }
 
 
-void QCaptureScreen::mouseMoveEvent(QMouseEvent* event)
+void QHomePage::mouseMoveEvent(QMouseEvent* event)
 {
 
 #ifdef TITLEBAR_HIDE
@@ -32,7 +37,7 @@ void QCaptureScreen::mouseMoveEvent(QMouseEvent* event)
 #endif // TITLEBAR_HIDE
 }
 
-void QCaptureScreen::mousePressEvent(QMouseEvent* event)
+void QHomePage::mousePressEvent(QMouseEvent* event)
 {
 #ifdef TITLEBAR_HIDE
 	if (event->button() == Qt::LeftButton)
@@ -46,7 +51,7 @@ void QCaptureScreen::mousePressEvent(QMouseEvent* event)
 #endif // TITLEBAR_HIDE
 }
 
-void QCaptureScreen::mouseReleaseEvent(QMouseEvent* event)
+void QHomePage::mouseReleaseEvent(QMouseEvent* event)
 {
 #ifdef TITLEBAR_HIDE
 	if (event->button() == Qt::LeftButton)
@@ -54,4 +59,10 @@ void QCaptureScreen::mouseReleaseEvent(QMouseEvent* event)
 		m_bDrag = false;
 	}
 #endif // TITLEBAR_HIDE
+}
+
+void QHomePage::OnBtnSerialPortTest()
+{
+	QSerialPortDlg dlg;
+	dlg.exec();
 }
