@@ -1,4 +1,4 @@
-#include "./UI/QCaptureScreen.h"
+#include "./UI/QHomePage.h"
 #include <QtWidgets/QApplication>
 
 int main(int argc, char *argv[])

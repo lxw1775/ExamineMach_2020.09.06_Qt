@@ -17,22 +17,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="UI\QCaptureScreen.cpp">
+    <ClCompile Include="UI\QHomePage.cpp">
       <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="UI\QCaptureScreen.h">
+    <QtMoc Include="UI\QHomePage.h">
       <Filter>UI</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="UI\QCaptureScreen.qrc">
+    <QtRcc Include="UI\QHomePage.qrc">
       <Filter>UI</Filter>
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="UI\QCaptureScreen.ui">
+    <QtUic Include="UI\QHomePage.ui">
       <Filter>UI</Filter>
     </QtUic>
   </ItemGroup>

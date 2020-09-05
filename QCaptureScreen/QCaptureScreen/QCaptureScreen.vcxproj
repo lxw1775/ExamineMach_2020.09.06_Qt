@@ -140,16 +140,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="UI\QCaptureScreen.cpp" />
+    <ClCompile Include="UI\QHomePage.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="UI\QCaptureScreen.h" />
+    <QtMoc Include="UI\QHomePage.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="UI\QCaptureScreen.qrc" />
+    <QtRcc Include="UI\QHomePage.qrc" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="UI\QCaptureScreen.ui" />
+    <QtUic Include="UI\QHomePage.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
