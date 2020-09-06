@@ -90,7 +90,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>.\UI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\UI;.\Logic;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -105,7 +105,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>.\UI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\UI;.\Logic;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -120,7 +120,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.\UI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\UI;.\Logic;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -135,7 +135,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>.\UI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\UI;.\Logic;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -144,9 +144,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Logic\QWeightMeasureDelegate.cpp" />
+    <ClCompile Include="Logic\QWeightMeasure_Youjian.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UI\QHomePage.cpp" />
     <ClCompile Include="UI\QSerialPortDlg.cpp" />
+    <ClCompile Include="UI\QWeightWgt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UI\QHomePage.h" />
@@ -160,6 +163,16 @@
   <ItemGroup>
     <QtUic Include="UI\QHomePage.ui" />
     <QtUic Include="UI\QSerialPortDlg.ui" />
+    <QtUic Include="UI\QWeightWgt.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Logic\QWeightMeasure_Youjian.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Logic\QWeightMeasureDelegate.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="UI\QWeightWgt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -14,6 +14,9 @@
     <Filter Include="UI">
       <UniqueIdentifier>{8d961b2c-9a7d-4aec-8cbd-e718bf17554e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Logic">
+      <UniqueIdentifier>{e0cc0545-9d34-48f3-8949-f271830d7256}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -23,12 +26,30 @@
     <ClCompile Include="UI\QSerialPortDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="Logic\QWeightMeasure_Youjian.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Logic\QWeightMeasureDelegate.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\QWeightWgt.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UI\QHomePage.h">
       <Filter>UI</Filter>
     </QtMoc>
     <QtMoc Include="UI\QSerialPortDlg.h">
+      <Filter>UI</Filter>
+    </QtMoc>
+    <QtMoc Include="Logic\QWeightMeasure_Youjian.h">
+      <Filter>Logic</Filter>
+    </QtMoc>
+    <QtMoc Include="Logic\QWeightMeasureDelegate.h">
+      <Filter>Logic</Filter>
+    </QtMoc>
+    <QtMoc Include="UI\QWeightWgt.h">
       <Filter>UI</Filter>
     </QtMoc>
   </ItemGroup>
@@ -42,6 +63,9 @@
       <Filter>UI</Filter>
     </QtUic>
     <QtUic Include="UI\QSerialPortDlg.ui">
+      <Filter>UI</Filter>
+    </QtUic>
+    <QtUic Include="UI\QWeightWgt.ui">
       <Filter>UI</Filter>
     </QtUic>
   </ItemGroup>
