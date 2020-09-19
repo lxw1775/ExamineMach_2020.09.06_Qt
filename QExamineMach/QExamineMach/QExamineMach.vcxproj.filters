@@ -32,8 +32,8 @@
     <ClCompile Include="Logic\QWeightMeasureDelegate.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="UI\QWeightWgt.cpp">
-      <Filter>UI</Filter>
+    <ClCompile Include="Logic\common.cpp">
+      <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -49,9 +49,6 @@
     <QtMoc Include="Logic\QWeightMeasureDelegate.h">
       <Filter>Logic</Filter>
     </QtMoc>
-    <QtMoc Include="UI\QWeightWgt.h">
-      <Filter>UI</Filter>
-    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="UI\QHomePage.qrc">
@@ -65,8 +62,10 @@
     <QtUic Include="UI\QSerialPortDlg.ui">
       <Filter>UI</Filter>
     </QtUic>
-    <QtUic Include="UI\QWeightWgt.ui">
-      <Filter>UI</Filter>
-    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Logic\common.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

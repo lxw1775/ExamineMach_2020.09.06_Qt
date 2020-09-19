@@ -6,6 +6,19 @@
 
 #include <QObject>
 #include <QSerialPort>
+#include <QMutex>
+#include <QWidget>
+#include "ui_QSerialPortDlg.h"
+
+enum deviceType
+{
+	eCommon = 0x27
+};
+
+enum cmdType
+{
+	eCmd = 0
+};
 
 class QWeightMeasure_Youjian : public QObject
 {
@@ -17,18 +30,32 @@ public:
 	 
 	//打开端口
 	bool OpenPort(QString& content);
-	//发送数据 
 	bool Send(QString& content);
-
-	char QWeightMeasure_Youjian::convertCharToHex(char ch);
-
-	//基本和单片机交互 数据 都是16进制的 我们这里自己写一个 Qstring 转为 16进制的函数	
-	void QWeightMeasure_Youjian::convertStringToHex(const QString& str, QByteArray& byteData);
-
+private:
+	//发送数据 
+	bool SendData(QString& content);
+	//数据分析
+	void DataAnaly();
 private slots:
 	//接收到单片机发送的数据进行解析
-	void OnReceiveInfo();
+	void OnDataReceive();
+	//响应
+	void OnDataRespone(QByteArray b);
+private:
+signals:
+	void sgnRespone(QByteArray b);
+	void sgnCmd();
 
 private:
 	QSerialPort* m_serialPort; //串口类
+
+
+	QMutex		m_lock;			//缓冲区锁 
+
+	QByteArray	m_Cache;			//缓冲区， 超过4000字节 清理一次
+	int			m_CmdStartIndex;	//缓冲区有效起始位
+	//int			m_CmdEndIndex;	//缓冲区有效结束位
+	int			m_MinCmdPreLen;		//预计命令最小长度
+	int			m_MaxCmdPreLen;		//预计命令最大长度
+
 };

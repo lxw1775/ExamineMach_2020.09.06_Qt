@@ -144,12 +144,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Logic\common.cpp" />
     <ClCompile Include="Logic\QWeightMeasureDelegate.cpp" />
     <ClCompile Include="Logic\QWeightMeasure_Youjian.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UI\QHomePage.cpp" />
     <ClCompile Include="UI\QSerialPortDlg.cpp" />
-    <ClCompile Include="UI\QWeightWgt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UI\QHomePage.h" />
@@ -163,7 +163,6 @@
   <ItemGroup>
     <QtUic Include="UI\QHomePage.ui" />
     <QtUic Include="UI\QSerialPortDlg.ui" />
-    <QtUic Include="UI\QWeightWgt.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Logic\QWeightMeasure_Youjian.h" />
@@ -172,7 +171,7 @@
     <QtMoc Include="Logic\QWeightMeasureDelegate.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="UI\QWeightWgt.h" />
+    <ClInclude Include="Logic\common.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
