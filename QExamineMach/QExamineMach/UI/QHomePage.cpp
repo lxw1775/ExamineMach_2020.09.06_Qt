@@ -2,6 +2,7 @@
 #include <QMouseEvent>
 #include <QPushButton>
 #include "QSerialPortDlg.h"
+#include "QExaminePersonDlg.h"
 //是否掩藏标题栏
 //#define TITLEBAR_HIDE
 
@@ -19,7 +20,7 @@ QHomePage::QHomePage(QWidget *parent)
 
 	//SIGNAL中函数参数 和 SLOT 函数参数一模一样
 	connect(ui.btnSerialPortTest, SIGNAL(clicked()), this, SLOT(OnBtnSerialPortTest()));
-	QPushButton;
+	connect(ui.btnExamineMackStart, SIGNAL(clicked()), this, SLOT(OnBtnExamineMachStart()));
 }
 
 
@@ -65,4 +66,12 @@ void QHomePage::OnBtnSerialPortTest()
 {
 	QSerialPortDlg dlg;
 	dlg.exec();
+}
+
+void QHomePage::OnBtnExamineMachStart()
+{
+	this->hide();
+	QExaminePersonDlg dlg;
+	dlg.exec();
+	this->show();
 }

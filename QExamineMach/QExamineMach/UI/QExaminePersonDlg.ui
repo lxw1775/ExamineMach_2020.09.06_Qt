@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QExaminePersonDlg</class>
+ <widget class="QWidget" name="QExaminePersonDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>QExaminePersonDlg</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QQRCodeReportPage" name="wgtQRCodeReport" native="true"/>
+   </item>
+   <item>
+    <widget class="QBMIMeasurePage" name="wgtBMI" native="true"/>
+   </item>
+   <item>
+    <widget class="QRemoteAdvertisePage" name="wgtRemoteAdvertise" native="true"/>
+   </item>
+   <item>
+    <widget class="QNearAdvertisePage" name="wgtNearAdvertise" native="true"/>
+   </item>
+   <item>
+    <widget class="QBodyFatMeasurePage" name="wgtBodyFat" native="true"/>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QBMIMeasurePage</class>
+   <extends>QWidget</extends>
+   <header>QBMIMeasurePage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QBodyFatMeasurePage</class>
+   <extends>QWidget</extends>
+   <header>QBodyFatMeasurePage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QNearAdvertisePage</class>
+   <extends>QWidget</extends>
+   <header>QNearAdvertisePage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QQRCodeReportPage</class>
+   <extends>QWidget</extends>
+   <header>QQRCodeReportPage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QRemoteAdvertisePage</class>
+   <extends>QWidget</extends>
+   <header>QRemoteAdvertisePage.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

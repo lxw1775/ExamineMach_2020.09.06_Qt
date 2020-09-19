@@ -18,6 +18,7 @@ protected:
 
 private slots:
 	void OnBtnSerialPortTest();
+	void OnBtnExamineMachStart();
 
 private:
 	Ui::QHomePage ui;

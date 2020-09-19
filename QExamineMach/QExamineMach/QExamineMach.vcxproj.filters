@@ -17,6 +17,21 @@
     <Filter Include="Logic">
       <UniqueIdentifier>{e0cc0545-9d34-48f3-8949-f271830d7256}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -35,6 +50,24 @@
     <ClCompile Include="Logic\common.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="UI\QExaminePersonDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\QBMIMeasurePage.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\QBodyFatMeasurePage.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\QNearAdvertisePage.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\QQRCodeReportPage.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\QRemoteAdvertisePage.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UI\QHomePage.h">
@@ -49,6 +82,24 @@
     <QtMoc Include="Logic\QWeightMeasureDelegate.h">
       <Filter>Logic</Filter>
     </QtMoc>
+    <QtMoc Include="UI\QExaminePersonDlg.h">
+      <Filter>UI</Filter>
+    </QtMoc>
+    <QtMoc Include="UI\QBMIMeasurePage.h">
+      <Filter>UI</Filter>
+    </QtMoc>
+    <QtMoc Include="UI\QBodyFatMeasurePage.h">
+      <Filter>UI</Filter>
+    </QtMoc>
+    <QtMoc Include="UI\QNearAdvertisePage.h">
+      <Filter>UI</Filter>
+    </QtMoc>
+    <QtMoc Include="UI\QQRCodeReportPage.h">
+      <Filter>UI</Filter>
+    </QtMoc>
+    <QtMoc Include="UI\QRemoteAdvertisePage.h">
+      <Filter>UI</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="UI\QHomePage.qrc">
@@ -60,6 +111,24 @@
       <Filter>UI</Filter>
     </QtUic>
     <QtUic Include="UI\QSerialPortDlg.ui">
+      <Filter>UI</Filter>
+    </QtUic>
+    <QtUic Include="UI\QExaminePersonDlg.ui">
+      <Filter>UI</Filter>
+    </QtUic>
+    <QtUic Include="UI\QBMIMeasurePage.ui">
+      <Filter>UI</Filter>
+    </QtUic>
+    <QtUic Include="UI\QBodyFatMeasurePage.ui">
+      <Filter>UI</Filter>
+    </QtUic>
+    <QtUic Include="UI\QNearAdvertisePage.ui">
+      <Filter>UI</Filter>
+    </QtUic>
+    <QtUic Include="UI\QQRCodeReportPage.ui">
+      <Filter>UI</Filter>
+    </QtUic>
+    <QtUic Include="UI\QRemoteAdvertisePage.ui">
       <Filter>UI</Filter>
     </QtUic>
   </ItemGroup>
