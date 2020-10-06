@@ -10,10 +10,14 @@ class QWeightMeasureDelegate : public QObject
 {
 	Q_OBJECT
 
-public:
+private:
 	QWeightMeasureDelegate(QObject* parent = NULL);
+public:
 	~QWeightMeasureDelegate();
+	static QWeightMeasureDelegate* GetInstance();
 
 private:
+	static QWeightMeasureDelegate* m_instance_ptr;
+
 	QWeightMeasure_Youjian* m_pQWeightMeasure_Youjian;
 };

@@ -1,35 +1,22 @@
-/*
-	悠健体重测量
-*/
-
 #pragma once
 
 #include <QObject>
 #include <QSerialPort>
 #include <QMutex>
+#include <QTimer>
 
-
-enum deviceType
-{
-	eCommon = 0x27
-};
-
-enum cmdType
-{
-	eCmd = 0
-};
-
-class QWeightMeasure_Youjian : public QObject
+class QDistanceMeausre_KS10R : public QObject
 {
 	Q_OBJECT
 
 public:
-	QWeightMeasure_Youjian(QObject *parent = NULL);
-	~QWeightMeasure_Youjian();
-	 
+	QDistanceMeausre_KS10R(QObject *parent= nullptr);
+	~QDistanceMeausre_KS10R();
+
 	//打开端口
 	bool OpenPort(QString& content);
-	bool Send(QString& content);
+	int start();
+	void stop();
 private:
 	//发送数据 
 	bool SendData(QString& content);
@@ -40,6 +27,8 @@ private slots:
 	void OnDataReceive();
 	//响应
 	void OnDataRespone(QByteArray b);
+	//
+	void OnSend();
 private:
 signals:
 	void sgnRespone(QByteArray b);
@@ -56,4 +45,5 @@ private:
 	int			m_MinCmdPreLen;		//预计命令最小长度
 	int			m_MaxCmdPreLen;		//预计命令最大长度
 
+	QTimer*		m_Timer;
 };

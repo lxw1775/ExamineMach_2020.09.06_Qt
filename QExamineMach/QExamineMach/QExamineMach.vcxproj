@@ -61,6 +61,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)bin</OutDir>
+    <IntDir>$(Platform)</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)bin\$(Platform)</OutDir>
+    <IntDir>$(Platform)</IntDir>
+  </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
@@ -147,6 +155,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Logic\common.cpp" />
+    <ClCompile Include="Logic\QDistanceMeasureDelegate.cpp" />
+    <ClCompile Include="Logic\QDistanceMeausre_KS10R.cpp" />
+    <ClCompile Include="Logic\QHeightMeasureDelegate.cpp" />
     <ClCompile Include="Logic\QWeightMeasureDelegate.cpp" />
     <ClCompile Include="Logic\QWeightMeasure_Youjian.cpp" />
     <ClCompile Include="main.cpp" />
@@ -186,6 +197,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logic\common.h" />
+    <QtMoc Include="Logic\QDistanceMeausre_KS10R.h" />
+    <QtMoc Include="Logic\QHeightMeasureDelegate.h" />
+    <QtMoc Include="Logic\QDistanceMeasureDelegate.h" />
     <QtMoc Include="UI\QQRCodeReportPage.h" />
     <QtMoc Include="UI\QBodyFatMeasurePage.h" />
     <QtMoc Include="UI\QBMIMeasurePage.h" />

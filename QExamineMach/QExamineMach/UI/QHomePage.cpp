@@ -72,6 +72,7 @@ void QHomePage::OnBtnExamineMachStart()
 {
 	this->hide();
 	QExaminePersonDlg dlg;
-	dlg.exec();
+	dlg.Init();
+	dlg.exec(); 
 	this->show();
 }

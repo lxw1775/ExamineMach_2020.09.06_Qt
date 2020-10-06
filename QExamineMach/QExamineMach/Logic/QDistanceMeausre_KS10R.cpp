@@ -1,19 +1,24 @@
-#include "QWeightMeasure_Youjian.h"
+#include "QDistanceMeausre_KS10R.h"
 #include <QDebug>
 #include "common.h"
 
 using namespace Measure;
 
-QWeightMeasure_Youjian::QWeightMeasure_Youjian(QObject *parent)
+QDistanceMeausre_KS10R::QDistanceMeausre_KS10R(QObject* parent)
 	: QObject(parent)
 	, m_CmdStartIndex(0)
 	, m_MinCmdPreLen(0)
 	, m_MaxCmdPreLen(1024)
+	, m_serialPort(NULL)
+	, m_Timer(NULL)
 {
 	m_serialPort = new QSerialPort();
+	m_Timer = new QTimer(this);
+	// m_Timer->setSingleShot(true);  //一次定时
+	connect(m_Timer, SIGNAL(timeout()), this, SLOT(OnSend()));
 }
 
-QWeightMeasure_Youjian::~QWeightMeasure_Youjian()
+QDistanceMeausre_KS10R::~QDistanceMeausre_KS10R()
 {
 	if (m_serialPort)
 	{
@@ -23,10 +28,35 @@ QWeightMeasure_Youjian::~QWeightMeasure_Youjian()
 		}
 		delete m_serialPort;
 	}
+
+	if (m_Timer)
+		delete m_Timer;
+}
+ 
+int QDistanceMeausre_KS10R::start()
+{
+	if (!m_serialPort)
+		return -1;
+
+	if (!m_serialPort->isOpen())
+		OpenPort(QString("COM3"));
+
+	//需要自检确认端口
+
+	
+	m_Timer->start(100);
+	return 0;
 }
 
+void QDistanceMeausre_KS10R::stop()
+{
+	if (m_Timer && m_Timer->isActive())
+		m_Timer->stop();
+
+	m_serialPort->close();
+}
 //打开端口
-bool QWeightMeasure_Youjian::OpenPort(QString& port)
+bool QDistanceMeausre_KS10R::OpenPort(QString& port)
 {
 	if (!m_serialPort)
 		return false;
@@ -52,7 +82,7 @@ bool QWeightMeasure_Youjian::OpenPort(QString& port)
 	m_serialPort->setFlowControl(QSerialPort::NoFlowControl);	//无流控制
 	m_serialPort->setParity(QSerialPort::NoParity);		//无校验位
 	m_serialPort->setStopBits(QSerialPort::OneStop);	//一位停止位
-	m_serialPort->setReadBufferSize(1024);  //设置读缓冲区大小，陈
+	m_serialPort->setReadBufferSize(1024);  //设置读缓冲区大小
 
 	m_serialPort->clear();
 	connect(m_serialPort, SIGNAL(readyRead()), this, SLOT(OnDataReceive()));
@@ -62,10 +92,10 @@ bool QWeightMeasure_Youjian::OpenPort(QString& port)
 }
 
 //接收到单片机发送的数据进行解析
-void QWeightMeasure_Youjian::OnDataReceive()
+void QDistanceMeausre_KS10R::OnDataReceive()
 {
 	if (!m_serialPort)
-		return ;
+		return;
 
 	m_lock.lock();
 	m_Cache.append(m_serialPort->readAll());
@@ -78,7 +108,7 @@ void QWeightMeasure_Youjian::OnDataReceive()
 	}
 }
 
-void QWeightMeasure_Youjian::DataAnaly()
+void QDistanceMeausre_KS10R::DataAnaly()
 {
 	m_lock.lock();
 	if (m_Cache.length() > 4000)
@@ -94,59 +124,44 @@ void QWeightMeasure_Youjian::DataAnaly()
 	}
 
 	int start = m_CmdStartIndex;
-	while (1) {
-		start = m_Cache.indexOf(0x5A, start);	//协议头
-		if (start <= -1)
-		{
-			m_lock.unlock();
-			break;
-		}
+	if (m_Cache.length() - m_CmdStartIndex < 2)
+	{
+		m_lock.unlock();
+		return;
+	}
 
-		int end = m_Cache.indexOf(0xAA, start);	//协议尾
-		if (end <= -1)
-		{
-			m_lock.unlock();
-			break;
-		}
+	QByteArray arr = m_Cache.mid(m_CmdStartIndex, 2);
+	m_CmdStartIndex += 2;
+	m_lock.unlock();
+	emit sgnRespone(arr);
+	return;
 
-		if (end - start - 1 != m_Cache[start + 1])//长度判断
-		{
-			m_lock.unlock();
-			break;
-		}
-
-		//异或校验
-		uchar val = m_Cache[start+1];
-		for (int i = start + 2; i < end-1; ++i)
-		{
-			val = val ^ m_Cache[ i];
-		}
-		if ((uchar)(m_Cache[end - 1]) == val)
-		{ 
-			m_CmdStartIndex = end + 1;
-			QByteArray arr = m_Cache.mid(start + 2, end - start - 3);
-			m_lock.unlock();
-			emit sgnRespone(arr);
-			break;
-		}
-
-		start++;
-	}	
+	m_lock.unlock();
 }
 
-void QWeightMeasure_Youjian::OnDataRespone(QByteArray b)
+void QDistanceMeausre_KS10R::OnDataRespone(QByteArray b)
 {
 	//ui.editReceiveArea->setText(b.toHex(' '));
+
+
+	 
 }
 
-bool QWeightMeasure_Youjian::Send(QString& content)
+
+void QDistanceMeausre_KS10R::OnSend()
 {
-	m_MinCmdPreLen = 7;
-	m_MaxCmdPreLen = 7;
-	return true;
+	if (!m_serialPort)
+		return;
+
+	m_MinCmdPreLen = 2;
+	m_MaxCmdPreLen = 2;
+	//QString content = "e8 02 bc";
+	QByteArray arr = QByteArray::fromHex(QVariant("E802BC").toByteArray());
+	m_serialPort->write(arr);
+	return;
 }
 
-bool QWeightMeasure_Youjian::SendData(QString& content)
+bool QDistanceMeausre_KS10R::SendData(QString& content)
 {
 	if (!m_serialPort)
 		return false;
@@ -162,3 +177,4 @@ bool QWeightMeasure_Youjian::SendData(QString& content)
 	m_serialPort->write(sendBuf); //这句是真正的给单片机发数据 用到的是QIODevice::write 具体可以看文档
 	return true;
 }
+

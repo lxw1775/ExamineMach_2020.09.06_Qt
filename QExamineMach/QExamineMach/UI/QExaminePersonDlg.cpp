@@ -14,4 +14,17 @@ QExaminePersonDlg::QExaminePersonDlg(QWidget *parent)
 
 QExaminePersonDlg::~QExaminePersonDlg()
 {
+	QDistanceMeasureDelegate::GetInstance()->stop();
 }
+
+void QExaminePersonDlg::Init()
+{
+	QDistanceMeasureDelegate* m_pDistanceMeasure = QDistanceMeasureDelegate::GetInstance();
+	m_pDistanceMeasure->start();
+}
+
+void QExaminePersonDlg::showEvent(QShowEvent* e)
+{
+
+}
+ 

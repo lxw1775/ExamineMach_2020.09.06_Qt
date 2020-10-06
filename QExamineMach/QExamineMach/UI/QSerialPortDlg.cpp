@@ -132,7 +132,7 @@ void QSerialPortDlg::OnDataReceive()
 {
 	m_lock.lock();
 	m_Cache.append(m_serialPort->readAll());
-	int len = m_Cache.length();
+	int len = m_Cache.length() - m_CmdStartIndex;
 	m_lock.unlock();
 
 	if (len >= m_MinCmdPreLen)
@@ -234,7 +234,7 @@ void QSerialPortDlg::sendInfo(QString& info)
 void QSerialPortDlg::OnSend()
 {
 	QString info = ui.editSendArea->toPlainText();
-	m_MinCmdPreLen = 7;
-	m_MaxCmdPreLen = 7;
+	m_MinCmdPreLen = 2;
+	m_MaxCmdPreLen = 2;
 	sendInfo(info);
 }
