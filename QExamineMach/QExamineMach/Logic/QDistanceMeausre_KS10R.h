@@ -26,6 +26,8 @@ private:
 	bool SendData(QString& content);
 	//数据分析
 	void DataAnaly();
+	//设置发送命令
+	void setSendCmd();
 private slots:
 	//接收到单片机发送的数据进行解析
 	void OnDataReceive();
@@ -40,9 +42,7 @@ signals:
 private:
 	QSerialPort* m_serialPort; //串口类
 
-
 	QMutex		m_lock;			//缓冲区锁 
-
 	QByteArray	m_Cache;			//缓冲区， 超过4000字节 清理一次
 	int			m_CmdStartIndex;	//缓冲区有效起始位
 	//int			m_CmdEndIndex;	//缓冲区有效结束位
@@ -50,4 +50,5 @@ private:
 	int			m_MaxCmdPreLen;		//预计命令最大长度
 
 	QTimer*		m_Timer;
+	QByteArray	m_sendCmd;
 };

@@ -4,13 +4,17 @@
 
 using namespace Measure;
 
-QWeightMeasure_Youjian::QWeightMeasure_Youjian(QObject *parent)
+QWeightMeasure_Youjian::QWeightMeasure_Youjian(QObject* parent)
 	: QObject(parent)
 	, m_CmdStartIndex(0)
 	, m_MinCmdPreLen(0)
 	, m_MaxCmdPreLen(1024)
+	, m_Timer(NULL)
 {
 	m_serialPort = new QSerialPort();
+	m_Timer = new QTimer(this);
+	// m_Timer->setSingleShot(true);  //一次定时
+	connect(m_Timer, SIGNAL(timeout()), this, SLOT(OnSend()));
 }
 
 QWeightMeasure_Youjian::~QWeightMeasure_Youjian()
@@ -23,6 +27,37 @@ QWeightMeasure_Youjian::~QWeightMeasure_Youjian()
 		}
 		delete m_serialPort;
 	}
+
+	if (m_Timer)
+		delete m_Timer;
+}
+
+int QWeightMeasure_Youjian::weightMeasureStart(QString& port)
+{
+	if (!m_serialPort)
+		return -1;
+
+	//if (!m_serialPort->isOpen())
+	if (!OpenPort(port))
+		return -1;
+
+	setSendCmd();
+
+	//需要自检确认端口 
+	if (m_Timer)
+		m_Timer->start(500);
+	return 0;
+}
+
+void QWeightMeasure_Youjian::stop()
+{
+	if (m_Timer && m_Timer->isActive())
+		m_Timer->stop();
+
+	m_serialPort->close();
+	m_serialPort->clear();
+	m_Cache.clear();
+	m_CmdStartIndex = 0;
 }
 
 //打开端口
@@ -65,7 +100,7 @@ bool QWeightMeasure_Youjian::OpenPort(QString& port)
 void QWeightMeasure_Youjian::OnDataReceive()
 {
 	if (!m_serialPort)
-		return ;
+		return;
 
 	m_lock.lock();
 	m_Cache.append(m_serialPort->readAll());
@@ -116,13 +151,13 @@ void QWeightMeasure_Youjian::DataAnaly()
 		}
 
 		//异或校验
-		uchar val = m_Cache[start+1];
-		for (int i = start + 2; i < end-1; ++i)
+		uchar val = m_Cache[start + 1];
+		for (int i = start + 2; i < end - 1; ++i)
 		{
-			val = val ^ m_Cache[ i];
+			val = val ^ m_Cache[i];
 		}
 		if ((uchar)(m_Cache[end - 1]) == val)
-		{ 
+		{
 			m_CmdStartIndex = end + 1;
 			QByteArray arr = m_Cache.mid(start + 2, end - start - 3);
 			m_lock.unlock();
@@ -131,7 +166,7 @@ void QWeightMeasure_Youjian::DataAnaly()
 		}
 
 		start++;
-	}	
+	}
 }
 
 void QWeightMeasure_Youjian::OnDataRespone(QByteArray b)
@@ -139,13 +174,30 @@ void QWeightMeasure_Youjian::OnDataRespone(QByteArray b)
 	//ui.editReceiveArea->setText(b.toHex(' '));
 }
 
+void QWeightMeasure_Youjian::setSendCmd()
+{
+	m_MinCmdPreLen = 7;
+	m_MaxCmdPreLen = 7;
+	//QString content = "e8 02 bc";
+	m_sendCmd = QByteArray::fromHex(QVariant("A50727A002010026AA").toByteArray()); //测量身高
+}
+
+void QWeightMeasure_Youjian::OnSend()
+{
+	if (!m_serialPort)
+		return;
+	m_serialPort->write(m_sendCmd);
+}
+
 bool QWeightMeasure_Youjian::Send(QString& content)
 {
 	m_MinCmdPreLen = 7;
 	m_MaxCmdPreLen = 7;
+	SendData(content);
 	return true;
 }
 
+//A5 07 27 A0 02 01 00 26 AA  
 bool QWeightMeasure_Youjian::SendData(QString& content)
 {
 	if (!m_serialPort)

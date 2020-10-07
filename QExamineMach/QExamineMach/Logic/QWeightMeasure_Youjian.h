@@ -7,6 +7,7 @@
 #include <QObject>
 #include <QSerialPort>
 #include <QMutex>
+#include <QTimer>
 
 
 enum deviceType
@@ -27,19 +28,28 @@ public:
 	QWeightMeasure_Youjian(QObject *parent = NULL);
 	~QWeightMeasure_Youjian();
 	 
+
+	int weightMeasureStart(QString& port);
+	void stop();
+
+private:
 	//打开端口
 	bool OpenPort(QString& content);
 	bool Send(QString& content);
-private:
 	//发送数据 
 	bool SendData(QString& content);
 	//数据分析
 	void DataAnaly();
+	//设置发送命令
+	void setSendCmd();
 private slots:
+	//定时发送
+	void OnSend();
 	//接收到单片机发送的数据进行解析
 	void OnDataReceive();
 	//响应
 	void OnDataRespone(QByteArray b);
+
 private:
 signals:
 	void sgnRespone(QByteArray b);
@@ -56,4 +66,6 @@ private:
 	int			m_MinCmdPreLen;		//预计命令最小长度
 	int			m_MaxCmdPreLen;		//预计命令最大长度
 
+	QTimer*		m_Timer;
+	QByteArray	m_sendCmd;
 };

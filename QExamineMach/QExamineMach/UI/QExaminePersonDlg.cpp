@@ -19,7 +19,7 @@ QExaminePersonDlg::~QExaminePersonDlg()
 void QExaminePersonDlg::Init()
 {
 	QDistanceMeasureDelegate* m_pDistanceMeasure = QDistanceMeasureDelegate::GetInstance();
-	bool b = connect(m_pDistanceMeasure, SIGNAL(sgnDistanceStateChanged(DistanceState)), this, SLOT(OnDistanceStateChanged(DistanceState)));
+	connect(m_pDistanceMeasure, SIGNAL(sgnDistanceStateChanged(DistanceState, DistanceState)), this, SLOT(OnDistanceStateChanged(DistanceState, DistanceState)));
 	m_pDistanceMeasure->start();
 }
 
@@ -35,13 +35,18 @@ void QExaminePersonDlg::showEvent(QShowEvent* e)
 
 }
 
-void QExaminePersonDlg::OnDistanceStateChanged(DistanceState eOld, DistanceState e)
+void QExaminePersonDlg::OnDistanceStateChanged(DistanceState old, DistanceState e)
 {
 	ui.wgtRemoteAdvertise->hide();
 	ui.wgtNearAdvertise->hide();
 	ui.wgtBMI->hide();
 	ui.wgtBodyFat->hide();
 	ui.wgtQRCodeReport->hide();
+
+	if (old == eEdge)
+	{
+		ui.wgtBMI->stopMeasure();
+	}
 
 	switch (e)
 	{
@@ -52,7 +57,8 @@ void QExaminePersonDlg::OnDistanceStateChanged(DistanceState eOld, DistanceState
 		ui.wgtNearAdvertise->show();
 		break;
 	case eEdge:
-		ui.wgtBMI->show();
+		ui.wgtBMI->show(); 
+		ui.wgtBMI->startMeasure();
 		break;
 	}
 }

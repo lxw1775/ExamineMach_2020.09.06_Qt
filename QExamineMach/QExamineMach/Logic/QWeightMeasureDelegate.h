@@ -16,8 +16,12 @@ public:
 	~QWeightMeasureDelegate();
 	static QWeightMeasureDelegate* GetInstance();
 
+	int start();
+	void stop();
 private:
 	static QWeightMeasureDelegate* m_instance_ptr;
 
 	QWeightMeasure_Youjian* m_pQWeightMeasure_Youjian;
+
+	QString			m_port;
 };

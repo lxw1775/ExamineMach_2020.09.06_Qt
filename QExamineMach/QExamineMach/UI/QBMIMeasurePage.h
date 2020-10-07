@@ -11,6 +11,9 @@ public:
 	QBMIMeasurePage(QWidget *parent = Q_NULLPTR);
 	~QBMIMeasurePage();
 
+	void startMeasure();
+	void stopMeasure();
+
 private:
 	Ui::QBMIMeasurePage ui;
 };

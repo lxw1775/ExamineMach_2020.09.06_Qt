@@ -47,6 +47,7 @@ int QDistanceMeausre_KS10R::start(QString& port)
 	if (!OpenPort(port))
 		return -1;
 
+	setSendCmd();
 	//需要自检确认端口 
 	if (m_Timer)
 		m_Timer->start(250);
@@ -158,16 +159,20 @@ void QDistanceMeausre_KS10R::OnDataRespone(QByteArray content)
 {
 }
 
+void QDistanceMeausre_KS10R::setSendCmd()
+{
+	m_MinCmdPreLen = 2;
+	m_MaxCmdPreLen = 2;
+	//QString content = "e8 02 bc";
+	m_sendCmd = QByteArray::fromHex(QVariant("E802BC").toByteArray());
+}
+
 void QDistanceMeausre_KS10R::OnSend()
 {
 	if (!m_serialPort)
 		return;
 
-	m_MinCmdPreLen = 2;
-	m_MaxCmdPreLen = 2;
-	//QString content = "e8 02 bc";
-	QByteArray arr = QByteArray::fromHex(QVariant("E802BC").toByteArray());
-	m_serialPort->write(arr);
+	m_serialPort->write(m_sendCmd);
 	return;
 }
 
