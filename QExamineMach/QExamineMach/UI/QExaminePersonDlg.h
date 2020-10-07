@@ -14,10 +14,12 @@ public:
 	~QExaminePersonDlg();
 
 	void Init();
-
+	void UnInit();
 protected:
 	void showEvent(QShowEvent* e);
-	
+
+public slots:
+	void OnDistanceStateChanged(DistanceState eOld, DistanceState e);
 
 private:
 	Ui::QExaminePersonDlg ui;	

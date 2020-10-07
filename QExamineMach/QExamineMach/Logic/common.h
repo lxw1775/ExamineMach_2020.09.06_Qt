@@ -5,6 +5,10 @@
 #include <QByteArray>
 
 
+#define localConfigName "localCfg.ini"
+
+QString getLocalCfgPath();
+
 namespace Measure{
 
 //另一个 函数 char 转为 16进制

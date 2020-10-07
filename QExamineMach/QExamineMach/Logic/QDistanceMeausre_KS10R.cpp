@@ -13,6 +13,9 @@ QDistanceMeausre_KS10R::QDistanceMeausre_KS10R(QObject* parent)
 	, m_Timer(NULL)
 {
 	m_serialPort = new QSerialPort();
+	connect(m_serialPort, SIGNAL(readyRead()), this, SLOT(OnDataReceive()));
+	connect(this, SIGNAL(sgnRespone(QByteArray)), this, SLOT(OnDataRespone(QByteArray)));
+
 	m_Timer = new QTimer(this);
 	// m_Timer->setSingleShot(true);  //一次定时
 	connect(m_Timer, SIGNAL(timeout()), this, SLOT(OnSend()));
@@ -22,6 +25,8 @@ QDistanceMeausre_KS10R::~QDistanceMeausre_KS10R()
 {
 	if (m_serialPort)
 	{
+		disconnect(m_serialPort, SIGNAL(readyRead()), this, SLOT(OnDataReceive()));
+		disconnect(this, SIGNAL(sgnRespone(QByteArray)), this, SLOT(OnDataRespone(QByteArray)));
 		if (m_serialPort->isOpen())
 		{
 			m_serialPort->close();
@@ -32,20 +37,26 @@ QDistanceMeausre_KS10R::~QDistanceMeausre_KS10R()
 	if (m_Timer)
 		delete m_Timer;
 }
- 
-int QDistanceMeausre_KS10R::start()
+
+int QDistanceMeausre_KS10R::start(QString& port)
 {
 	if (!m_serialPort)
 		return -1;
 
-	if (!m_serialPort->isOpen())
-		OpenPort(QString("COM3"));
+	//if (!m_serialPort->isOpen())
+	if (!OpenPort(port))
+		return -1;
 
-	//需要自检确认端口
-
-	
-	m_Timer->start(100);
+	//需要自检确认端口 
+	if (m_Timer)
+		m_Timer->start(250);
 	return 0;
+}
+
+void QDistanceMeausre_KS10R::changeInterval(int mes)
+{
+	if (m_Timer && m_Timer->isActive())
+		m_Timer->setInterval(mes);
 }
 
 void QDistanceMeausre_KS10R::stop()
@@ -54,6 +65,9 @@ void QDistanceMeausre_KS10R::stop()
 		m_Timer->stop();
 
 	m_serialPort->close();
+	m_serialPort->clear();
+	m_Cache.clear();
+	m_CmdStartIndex = 0;
 }
 //打开端口
 bool QDistanceMeausre_KS10R::OpenPort(QString& port)
@@ -65,8 +79,6 @@ bool QDistanceMeausre_KS10R::OpenPort(QString& port)
 	{
 		m_serialPort->clear();
 		m_serialPort->close();
-		disconnect(m_serialPort, SIGNAL(readyRead()), this, SLOT(OnDataReceive()));
-		disconnect(this, SIGNAL(sgnRespone(QByteArray)), this, SLOT(OnDataRespone(QByteArray)));
 	}
 
 	m_serialPort->setPortName(port);//当前选择的串口名字 如port
@@ -85,8 +97,6 @@ bool QDistanceMeausre_KS10R::OpenPort(QString& port)
 	m_serialPort->setReadBufferSize(1024);  //设置读缓冲区大小
 
 	m_serialPort->clear();
-	connect(m_serialPort, SIGNAL(readyRead()), this, SLOT(OnDataReceive()));
-	connect(this, SIGNAL(sgnRespone(QByteArray)), this, SLOT(OnDataRespone(QByteArray)));
 
 	return true;
 }
@@ -133,20 +143,20 @@ void QDistanceMeausre_KS10R::DataAnaly()
 	QByteArray arr = m_Cache.mid(m_CmdStartIndex, 2);
 	m_CmdStartIndex += 2;
 	m_lock.unlock();
-	emit sgnRespone(arr);
+
+	int val = 0;
+	for (int i = 0; i < arr.size(); ++i)
+	{
+		val += val * 256 + arr[i];
+	}
+	emit sgnRealData(val);
+	//emit sgnRespone(arr);
 	return;
-
-	m_lock.unlock();
 }
 
-void QDistanceMeausre_KS10R::OnDataRespone(QByteArray b)
+void QDistanceMeausre_KS10R::OnDataRespone(QByteArray content)
 {
-	//ui.editReceiveArea->setText(b.toHex(' '));
-
-
-	 
 }
-
 
 void QDistanceMeausre_KS10R::OnSend()
 {

@@ -7,7 +7,7 @@
 //#define TITLEBAR_HIDE
 
 
-QHomePage::QHomePage(QWidget *parent)
+QHomePage::QHomePage(QWidget* parent)
 	: QMainWindow(parent)
 	, m_bDrag(false)
 {
@@ -73,6 +73,7 @@ void QHomePage::OnBtnExamineMachStart()
 	this->hide();
 	QExaminePersonDlg dlg;
 	dlg.Init();
-	dlg.exec(); 
+	dlg.exec();
+	dlg.UnInit();
 	this->show();
 }

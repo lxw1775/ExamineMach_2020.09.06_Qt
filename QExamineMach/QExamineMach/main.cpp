@@ -25,19 +25,19 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext& ctx, const Q
     switch (type)
     {
     case QtDebugMsg:
-        txt = QString("%1 <%2> [%3] Debug: %4").arg(timeStr).arg(path).arg(ctx.line).arg(msg);
+        txt = QString("%1 Debug <%2> [%3]: %4").arg(timeStr).arg(path).arg(ctx.line).arg(msg);
         break;
     case QtWarningMsg:
-        txt = QString("%1 <%2> [%3] Warning: %4").arg(timeStr).arg(path).arg(ctx.line).arg(msg);
+        txt = QString("%1 Warning <%2> [%3]: %4").arg(timeStr).arg(path).arg(ctx.line).arg(msg);
         break;
     case QtCriticalMsg:
-        txt = QString("%1 <%2> [%3] Critical: %4").arg(timeStr).arg(path).arg(ctx.line).arg(msg);
+        txt = QString("%1 Critical <%2> [%3]: %4").arg(timeStr).arg(path).arg(ctx.line).arg(msg);
         break;
     case QtFatalMsg:
-        txt = QString("%1 <%2> [%3] Fatal: %4").arg(timeStr).arg(path).arg(ctx.line).arg(msg);
+        txt = QString("%1 Fatal <%2> [%3]: %4").arg(timeStr).arg(path).arg(ctx.line).arg(msg);
         break;
     case QtInfoMsg:
-        txt = QString("%1 <%2> [%3] Info: %4").arg(timeStr).arg(path).arg(ctx.line).arg(msg);
+        txt = QString("%1 Info <%2> [%3]: %4").arg(timeStr).arg(path).arg(ctx.line).arg(msg);
         break;
     default:
         break;

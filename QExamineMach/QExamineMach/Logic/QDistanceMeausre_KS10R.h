@@ -10,13 +10,17 @@ class QDistanceMeausre_KS10R : public QObject
 	Q_OBJECT
 
 public:
-	QDistanceMeausre_KS10R(QObject *parent= nullptr);
+	QDistanceMeausre_KS10R(QObject* parent = nullptr);
 	~QDistanceMeausre_KS10R();
 
 	//打开端口
 	bool OpenPort(QString& content);
-	int start();
+	int start(QString& port);
 	void stop();
+	void changeInterval(int mes);//设置实时测量频率 毫秒
+signals:
+	void sgnRealData(int val); //实时距离 毫米
+
 private:
 	//发送数据 
 	bool SendData(QString& content);

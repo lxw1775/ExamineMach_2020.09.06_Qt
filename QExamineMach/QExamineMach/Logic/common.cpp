@@ -1,6 +1,10 @@
 #include "common.h"
+#include <QCoreApplication>
 
-
+QString getLocalCfgPath()
+{
+	return QCoreApplication::applicationDirPath() + "/" + localConfigName;
+}
 
 namespace Measure {
 	//另一个 函数 char 转为 16进制
